@@ -105,3 +105,26 @@ function drawCanvas() {
 
     requestAnimationFrame(drawCanvas);
 };
+
+
+//// TOUCH AND MOUSE CONTROLS ////
+var moving = false;
+
+// initialize touch and mouse position
+var pointer_initial = {
+    x: 0,
+    y: 0
+};
+
+canvas.addEventListener('touchstart', pointerStart);
+canvas.addEventListener('mousedown', pointerStart);
+
+function pointerStart(event) {
+    moving = true;
+    if (event.type === 'touchstart') {
+        alert('touch');
+
+    } else if ( event.type === 'mousedown') {
+        alert('mouseDown');
+    }
+};
