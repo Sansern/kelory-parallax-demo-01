@@ -80,7 +80,7 @@ layer_list.forEach(function(layer, index){
     layer.image.onload = function() {
         load_counter += 1;
         if (load_counter >= layer_list.length) {
-            drawCanvas();
+            requestAnimationFrame(drawCanvas);
         }
     }
     layer.image.src = layer.src;
@@ -88,10 +88,20 @@ layer_list.forEach(function(layer, index){
 
 function drawCanvas() {
     // clear whatever is in the canvas
-    context.clearRect(0,0,canvas.clientWidth, canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Loop throught each layer and draw it to the canvas
     layer_list.forEach(function(layer, index) {
+        if (layer.blend) {
+            context.globalCompositeOperation = layer.blend;
+        } else {
+            context.globalCompositeOperation = 'normal';
+        }
+        context.globalAlpha = layer.opacity;
+
+
         context.drawImage(layer.image, layer.position.x, layer.position.y);
     });
+
+    requestAnimationFrame(drawCanvas);
 };
